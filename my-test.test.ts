@@ -1,9 +1,8 @@
 it('does something', async () => {
-  await expect(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error('foo'));
-      }, 1000)
-    })
+  jest.useFakeTimers()
+
+  await expect(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return Promise.reject(new Error('foo'))
   }).rejects.toThrow('foo')
 })
